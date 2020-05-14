@@ -6286,5 +6286,5 @@ export const loadInitialData = () => {
       ...person,
       communityId: communities[idx % communities.length]._id,
     })
-  );
+  )
 };
