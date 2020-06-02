@@ -12,12 +12,12 @@ describe('Home', () => {
   });
 });
 
-// describe('Data load', () => {
-//   it('confirm events dropdown populates', () => {
-//     cy.visit('/');
-//     cy.get('.event-selector')
-//       .find('option')
-//       .its('length')
-//       .should('be.gt', 1);
-//   });
-// });
+describe('Data load', () => {
+  it('confirm events dropdown populates', () => {
+    cy.visit('/');
+    cy.get('#event-selector')
+      .find('a')
+      .its('length')
+      .should('be.gt', 1);
+  });
+});

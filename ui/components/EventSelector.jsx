@@ -1,28 +1,17 @@
+import React, { useState } from 'react';
+import { useParams, useLocation, Link } from 'react-router-dom';
+import { Select, MenuItem } from '@material-ui/core';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import React, { useState } from 'react';
-import {
-  useRouteMatch,
-  Switch,
-  Route,
-  useHistory,
-  Link,
-  useLocation,
-} from 'react-router-dom';
-import {Select, MenuItem, InputLabel,FormControl } from '@material-ui/core';
 
 import { TEXTS } from '../../shared/constants';
 import { Communities } from '../../collections/communities';
 
-import EventCard from './EventCard';
-
-const Events = () => {
-  const [selectedEvent, setSelectedEvent] = useState("1");
-
-  const match = useRouteMatch();
-  const history = useHistory();
+const EventSelector = () => {
   const location = useLocation();
-  console.log(location);
+  const { eventId } = useParams();
+  const isLandingPage = location.pathname === '/' ? '1': null;
+  const [selectedEvent, setSelectedEvent] = useState(isLandingPage || eventId);
 
   const [commLoading, events] = useTracker(() => {
     const handle = Meteor.subscribe('communities');
@@ -45,7 +34,7 @@ const Events = () => {
             id="event-selector"
             displayEmpty
             value={selectedEvent}
-            onChange={e=>(setSelectedEvent(e.target.value))}
+            onChange={e => setSelectedEvent(e.target.value)}
           >
             {events.map(event => (
               <MenuItem
@@ -57,20 +46,18 @@ const Events = () => {
                 key={event._id}
                 value={event._id}
               >
-                <h1>{event.name}</h1>
+                <h2>{event.name}</h2>
               </MenuItem>
             ))}
-            <MenuItem key={1} value={1}><h1>{TEXTS.DEFAULT_EVENT}</h1></MenuItem>
+            <MenuItem key={1} value={1}>
+            <h2>{TEXTS.DEFAULT_EVENT}</h2>
+            </MenuItem>
           </Select>
-          <Switch>
-            <Route path="/event/:eventId" >
-              <EventCard />
-            </Route>
-          </Switch>
+          {/* <h2>{events.find(event => event._id === selectedEvent)?.name}</h2> */}
         </form>
       )}
     </div>
   );
 };
 
-export default Events;
+export default EventSelector;

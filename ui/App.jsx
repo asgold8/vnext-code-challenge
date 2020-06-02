@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import { TEXTS } from '../shared/constants';
 import Events from './components/Events';
-import EventsList from './components/EventsList';
+import EventSelector from './components/EventSelector';
+import EventCard from './components/EventCard';
 //import history from './history';
 
 const App = () => {
@@ -11,11 +12,14 @@ const App = () => {
     <div>
       <h1>{TEXTS.HOME_TITLE}</h1>
       {/* <Router history={history}> */}
-      <Router >
+      <Router>
         <Switch>
-          <Route path="/">
-            <EventsList />
-          </Route>          
+          <Route path="/:event?/:eventId?">
+            {/* <Route path="/event/:eventId"></Route> */}
+            <EventSelector />
+            <EventCard />
+            {/* <Events /> */}
+          </Route>
         </Switch>
       </Router>
     </div>
