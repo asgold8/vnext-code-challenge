@@ -18,7 +18,7 @@ const EventSelector = () => {
     const comms = Communities.find({}).fetch();
     return [!handle.ready(), comms];
   });
-
+  
   const handleSubmit = e => {
     e.preventDefault();
   };
